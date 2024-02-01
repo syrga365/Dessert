@@ -1,6 +1,12 @@
 from django.db import models
 
+
 # Create your models here.
+class Category(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.id} - {self.title}'
 
 
 class Dessert(models.Model):
@@ -11,3 +17,14 @@ class Dessert(models.Model):
     rate = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    category = models.ManyToManyField(Category, related_name="category")
+
+
+class ReviewDessert(models.Model):
+    review_desserts = models.ForeignKey(
+        'post.Dessert',
+        on_delete=models.CASCADE,
+        related_name="review_dessert"
+    )
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

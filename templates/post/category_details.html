@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+{% for category in categories %}
+<h5>{{ category.title }}:</h5>
+    {% endfor %}
+
+
+{% for dessert in dessert_post %}
+   <p><i>{{ dessert.title }} </i></p>
+{%  endfor %}
+
+
+
+{% endblock %}

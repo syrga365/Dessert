@@ -9,5 +9,12 @@
     <p>{{ dessert_posts.created_at }}</p>
 
 
+    <h4>Отзывы: </h4>
+        {% for review in dessert_posts.review_dessert.all %}
+                <p> -<i>{{ review.text }}</i></p>
+                <p>{{ review.created_at }}</p>
+                {% endfor %}
+
+
 
 {% endblock %}
