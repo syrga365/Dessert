@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h3> {{ dessert_posts.title }} {{ dessert_posts.rate }} </h3><br>
+      <img src=/media/{{ dessert_posts.photo }}><br>
+    <i>{{  dessert_posts.title}} - {{ dessert_posts.content }}</i><br><br>
+    <i>Рецепт</i><br>
+    <p><i>{{ dessert_posts.recipe }}</i></p><br>
+    <p>{{ dessert_posts.created_at }}</p>
+
+
+
+{% endblock %}
