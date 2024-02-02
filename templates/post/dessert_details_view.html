@@ -15,6 +15,10 @@
                 <p>{{ review.created_at }}</p>
                 {% endfor %}
 
-
+<form action="/dessert_posts/{{ post_id.id }}/review/" method="post">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+         <input type="submit" value="Create">
+</form>
 
 {% endblock %}

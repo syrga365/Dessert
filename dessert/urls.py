@@ -25,7 +25,11 @@ from post.views import (main_page_view,
                         dessert_posts_view,
                         dessert_post_details_view,
                         category_view,
-                        category_details_view
+                        category_details_view,
+                        dessert_posts_create_view,
+                        category_create_view,
+                        review_dessert_create_view
+
                         )
 
 
@@ -36,9 +40,12 @@ urlpatterns = [
     path('hello/', hello_view),
     path('current_date/', current_date_view),
     path('goodby/', goodbye_view),
-    path('dessert_post/', dessert_posts_view),
-    path('dessert_post/<int:post_id>/', dessert_post_details_view),
-    path('category/', category_view),
-    path('category/<int:category_id>/', category_details_view)
+    path('dessert_post/', dessert_posts_view, name='desserts'),
+    path('dessert_post/<int:post_id>/', dessert_post_details_view, name='dessert_details'),
+    path('category/', category_view, name='category'),
+    path('category/<int:category_id>/', category_details_view),
+    path('dessert_post/dessert_create/', dessert_posts_create_view),
+    path('category/create_category/', category_create_view),
+    path('dessert_post/<int:post_id>/review/', review_dessert_create_view),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
