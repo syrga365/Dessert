@@ -14,17 +14,25 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <img width="150" src="{% static 'dessert.jpg' %}">
-          <a class="navbar-brand" href="/">Dessert</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="/dessert_post/">Desserts</a>
-              <a class="nav-link" href="/category/">Category</a>
-              <a class="nav-link" href="/dessert_post/dessert_create/">Create Dessert</a>
-              <a class="nav-link" href="/category/create_category/">Create Category</a>
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+           <a class="navbar-brand" href="/">Dessert</a>
+           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+           </button>
+           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                  <a class="nav-link active" aria-current="page" href="/dessert_post/">Desserts</a>
+                  <a class="nav-link" href="/category/">Category</a>
+                  <a class="nav-link" href="/dessert_post/dessert_create/">Create Post</a>
+                  <a class="nav-link" href="/category/create_category/">Create Category</a>
+                  <a class="nav-link" href="/login/"> Login</a>
+                  <a class="nav-link" href="/profile/">Profile</a>
+                    <img src="{{ user.profile.avatar.url }}" width="80">
+                  <a class="nav-link" href="/logout/">Logout</a>
+                {% else %}
+                  <a class="nav-link" href="/register/"> Register</a>
+                  <a class="nav-link" href="/login/"> Login</a>
+                {% endif %}
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from post.models import Dessert, Category
 from post.form import DessertCreateForm, CategoryCreateForm, ReviewDessertCreateForm
+from django.contrib.auth.decorators import login_required
 
 
 def main_page_view(request):
@@ -26,9 +27,10 @@ def goodbye_view(request):
         return HttpResponse("Good bye, user!!!")
 
 
+@login_required
 def dessert_posts_view(request):
     if request.method == "GET":
-        dessert_posts = Dessert.objects.all()
+        dessert_posts = Dessert.objects.all().exclude(user=request.user)
         return render(request, "post/dessert_view.html",
                       context={'dessert_post': dessert_posts})
 
@@ -57,6 +59,7 @@ def category_details_view(request, category_id):
                       context={'categories': categories, "dessert_post": dessert_post})
 
 
+@login_required
 def dessert_posts_create_view(request):
     if request.method == 'GET':
         context = {"form": DessertCreateForm()}
@@ -76,6 +79,7 @@ def dessert_posts_create_view(request):
         return render(request, 'post/dessert_create.html', context=context)
 
 
+@login_required
 def category_create_view(request):
     if request.method == 'GET':
         context = {"form": CategoryCreateForm()}
@@ -89,9 +93,10 @@ def category_create_view(request):
         context = {
             "form": form
         }
-        return render(request, 'post/category_create  .html', context=context)
+        return render(request, 'post/category_create.html', context=context)
 
 
+@login_required
 def review_dessert_create_view(request, post_id):
     if request.method == 'POST':
         form = ReviewDessertCreateForm(request.POST)
@@ -99,6 +104,7 @@ def review_dessert_create_view(request, post_id):
         if form.is_valid():
             review = form.save(commit=False)
             review.post_id = post_id
+            review.user = request.user
             review.save()
 
         return redirect('dessert_details', post_id=post_id)

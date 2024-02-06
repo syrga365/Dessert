@@ -2,17 +2,15 @@
 
 {% block content %}
 
- <h3> Десерты</h3>
-{% for dessert in dessert_post %}
-      <div class="card" style="width: 18rem;">
-      <img src="/media/{{ dessert.photo }}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h4 class="card-title"> {{ dessert.title }}  {{ dessert.rate }}</h4>
-        <a href="/dessert_post/{{ dessert.id }}/" class="btn btn-primary">Перейти</a>
-      </div>
-    </div>
+     <h3> Десерты</h3>
+    {% for dessert in dessert_post %}
+          <div class="card" style="width: 18rem;">
+          <img src="/media/{{ dessert.photo }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h4 class="card-title"> {{ dessert.title }}  {{ dessert.rate }}</h4>
+            <a href="/dessert_post/{{ dessert.id }}/" class="btn btn-primary">Перейти</a>
+          </div>
+        </div>
     {% endfor %}
-
-
 {% endblock %}
 

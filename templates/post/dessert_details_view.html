@@ -2,7 +2,7 @@
 
 {% block content %}
     <h3> {{ dessert_posts.title }} {{ dessert_posts.rate }} </h3><br>
-      <img src=/media/{{ dessert_posts.photo }}><br>
+      <img src=/media/ {{ dessert_posts.photo }}><br>
     <i>{{  dessert_posts.title}} - {{ dessert_posts.content }}</i><br><br>
     <i>Рецепт</i><br>
     <p><i>{{ dessert_posts.recipe }}</i></p><br>
@@ -12,13 +12,18 @@
     <h4>Отзывы: </h4>
         {% for review in dessert_posts.review_dessert.all %}
                 <p> -<i>{{ review.text }}</i></p>
+                {{ review.user.username }}
                 <p>{{ review.created_at }}</p>
-                {% endfor %}
+        {% endfor %}
 
-<form action="/dessert_posts/{{ post_id.id }}/review/" method="post">
-        {% csrf_token %}
-        {{ review_form.as_p }}
-         <input type="submit" value="Create">
-</form>
+
+{% if user.is_authenticated %}
+    <form action="/dessert_post/{{ post.id }}/review/" method="post">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+             <input type="submit" value="Create">
+    </form>
+{% endif %}
+
 
 {% endblock %}

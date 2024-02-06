@@ -28,11 +28,9 @@ from post.views import (main_page_view,
                         category_details_view,
                         dessert_posts_create_view,
                         category_create_view,
-                        review_dessert_create_view
-
+                        review_dessert_create_view,
                         )
-
-
+from user.views import register_view, login_view, profile_view, logout_view, veryfy_view
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -41,11 +39,17 @@ urlpatterns = [
     path('current_date/', current_date_view),
     path('goodby/', goodbye_view),
     path('dessert_post/', dessert_posts_view, name='desserts'),
-    path('dessert_post/<int:post_id>/', dessert_post_details_view, name='dessert_details'),
     path('category/', category_view, name='category'),
-    path('category/<int:category_id>/', category_details_view),
-    path('dessert_post/dessert_create/', dessert_posts_create_view),
     path('category/create_category/', category_create_view),
+    path('dessert_post/dessert_create/', dessert_posts_create_view),
+    path('dessert_post/<int:post_id>/', dessert_post_details_view, name='dessert_details'),
+    path('category/<int:category_id>/', category_details_view),
     path('dessert_post/<int:post_id>/review/', review_dessert_create_view),
+
+    path('register/', register_view, name='register'),
+    path('login/', login_view, name='login'),
+    path('profile/', profile_view, name='profile'),
+    path('logout/', logout_view, name='logout'),
+    path('verify/', veryfy_view, name='veryfy')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
