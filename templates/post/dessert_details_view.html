@@ -12,13 +12,13 @@
     <h4>Отзывы: </h4>
         {% for review in dessert_posts.review_dessert.all %}
                 <p> -<i>{{ review.text }}</i></p>
-                {{ review.user.username }}
+<!--                {{ review.user.username }}-->
                 <p>{{ review.created_at }}</p>
         {% endfor %}
 
 
 {% if user.is_authenticated %}
-    <form action="/dessert_post/{{ post.id }}/review/" method="post">
+    <form action="/dessert_post/{{ dessert_posts.id }}/" method="post">
             {% csrf_token %}
             {{ review_form.as_p }}
              <input type="submit" value="Create">

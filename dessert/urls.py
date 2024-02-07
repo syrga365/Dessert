@@ -27,8 +27,7 @@ from post.views import (main_page_view,
                         category_view,
                         category_details_view,
                         dessert_posts_create_view,
-                        category_create_view,
-                        review_dessert_create_view,
+                        category_create_view
                         )
 from user.views import register_view, login_view, profile_view, logout_view, veryfy_view
 urlpatterns = [
@@ -44,7 +43,6 @@ urlpatterns = [
     path('dessert_post/dessert_create/', dessert_posts_create_view),
     path('dessert_post/<int:post_id>/', dessert_post_details_view, name='dessert_details'),
     path('category/<int:category_id>/', category_details_view),
-    path('dessert_post/<int:post_id>/review/', review_dessert_create_view),
 
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
