@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h3> {{ posts.title }} {{ posts.rate }} </h3><br>
+      <img src=/media/{{ posts.photo }}><br>
+    <i>{{  posts.title}} - {{ posts.content }}</i><br><br>
+    <i>Рецепт</i><br>
+    <p><i>{{ posts.recipe }}</i></p><br>
+    <p>{{ posts.created_at }}</p>
+
+
+<h4>Отзывы: </h4>
+    {% for review in posts.review.all %}
+         <p> -<i>{{ review.text }}</i></p>
+         {{ review.user.username }}
+         <p>{{ review.created_at }}</p>
+    {% endfor %}
+
+
+<form action="/post/{{ posts.id }}/review/" method="post">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+         <input type="submit" value="Create">
+</form>
+
+
+
+{% endblock %}

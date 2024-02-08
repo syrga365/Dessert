@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-from post.models import Dessert, Category, ReviewDessert
-from post.form import DessertCreateForm, CategoryCreateForm, ReviewDessertCreateForm
+from post.models import Dessert, Category
+from post.form import CategoryForm, PostCreateForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -28,35 +28,19 @@ def goodbye_view(request):
 
 
 @login_required
-def dessert_posts_view(request):
+def post_list_view(request):
     if request.method == "GET":
-        dessert_posts = Dessert.objects.all().exclude(user=request.user)
-        return render(request, "post/dessert_view.html",
-                      context={'dessert_post': dessert_posts})
+        posts = Dessert.objects.all().exclude(user=request.user)
+        return render(request, "post/list.html",
+                      context={'posts': posts})
 
 
-def dessert_post_details_view(request, post_id):
+def post_details_view(request, post_id):
+    form = ReviewForm()
     if request.method == 'GET':
-        form = ReviewDessertCreateForm()
-        dessert_post = Dessert.objects.get(id=post_id)
-        return render(request, "post/dessert_details_view.html",
-                      context={'dessert_posts': dessert_post,
-                               'review_form': form})
-    elif request.method == 'POST':
-        dessert_post = Dessert.objects.get(id=post_id)
-        form = ReviewDessertCreateForm(data=request.POST)
-
-        if form.is_valid():
-            ReviewDessert.objects.create(
-                review_desserts_id=post_id,
-                text=form.cleaned_data.get('text'),
-            )
-            return redirect(f'/dessert_post/{post_id}')
-        context = {
-            'dessert_post': dessert_post,
-            'review_form': form,
-        }
-        return render(request, 'post/dessert_details_view.html', context=context)
+        posts = Dessert.objects.get(id=post_id)
+        return render(request, "post/details.html",
+                      context={'posts': posts, 'review_form': form})
 
 
 def category_view(request):
@@ -69,38 +53,38 @@ def category_view(request):
 def category_details_view(request, category_id):
     if request.method == 'GET':
         categories = Category.objects.filter(id=category_id)
-        dessert_post = Dessert.objects.filter(category__in=categories)
+        posts = Dessert.objects.filter(category__in=categories)
         return render(request, "post/category_details.html",
-                      context={'categories': categories, "dessert_post": dessert_post})
+                      context={'categories': categories, "posts": posts})
 
 
 @login_required
-def dessert_posts_create_view(request):
+def post_create_view(request):
     if request.method == 'GET':
-        context = {"form": DessertCreateForm()}
-        return render(request, 'post/dessert_create.html', context=context)
+        context = {"form": PostCreateForm()}
+        return render(request, 'post/create.html', context=context)
     elif request.method == 'POST':
-        form = DessertCreateForm(request.POST, request.FILES)
+        form = PostCreateForm(request.POST, request.FILES)
 
         if form.is_valid():
-            print(form.cleaned_data)
-            # Book.objects.create(**form.cleaned_data)
-            form.save()
-            return redirect('desserts')
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('list')
         context = {
             "form": form
         }
 
-        return render(request, 'post/dessert_create.html', context=context)
+        return render(request, 'post/create.html', context=context)
 
 
 @login_required
 def category_create_view(request):
     if request.method == 'GET':
-        context = {"form": CategoryCreateForm()}
+        context = {"form": CategoryForm()}
         return render(request, 'post/category_create.html', context=context)
     elif request.method == 'POST':
-        form = CategoryCreateForm(request.POST)
+        form = CategoryForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -109,17 +93,17 @@ def category_create_view(request):
             "form": form
         }
         return render(request, 'post/category_create.html', context=context)
-#
-#
-# @login_required
-# def review_dessert_create_view(request, post_id):
-#     if request.method == 'POST':
-#         form = ReviewDessertCreateForm(request.POST)
-#
-#         if form.is_valid():
-#             review = form.save(commit=False)
-#             review.post_id = post_id
-#             review.user = request.user
-#             review.save()
-#
-#         return redirect('dessert_details', post_id=post_id)
+
+
+@login_required
+def review_create_view(request, post_id):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.posts_id = post_id
+            review.user = request.user
+            review.save()
+
+        return redirect('details', post_id=post_id)

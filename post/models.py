@@ -13,7 +13,7 @@ class Dessert(models.Model):
     user = models.ForeignKey(
         'auth.User',
         on_delete=models.CASCADE,
-        related_name='desserts',
+        related_name='posts',
         null=True
     )
     title = models.CharField(max_length=100)
@@ -30,13 +30,12 @@ class ReviewDessert(models.Model):
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
-        related_name="review_dessert",
         null=True
     )
-    review_desserts = models.ForeignKey(
+    posts = models.ForeignKey(
         'post.Dessert',
         on_delete=models.CASCADE,
-        related_name="review_dessert"
+        related_name="review"
     )
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

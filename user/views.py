@@ -1,9 +1,9 @@
+import random
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from user.forms import RegisterForm, LoginForm, VeryfyForm
 from user.models import Profile, SMSCodes
 from django.contrib.auth import authenticate, login, logout
-import random
 
 
 def register_view(request):
@@ -34,7 +34,7 @@ def register_view(request):
                 avatar=avatar,
                 bio=bio
             )
-            code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+            code = ''.join([str(random.randint(0, 9)) for _ in range(5)])
             SMSCodes.objects.create(
                 user=user,
                 code=code
@@ -54,7 +54,7 @@ def veryfy_view(request):
             if SMSCodes.objects.filter(code=code).exists():
                 sms_code = SMSCodes.objects.get(code=code)
                 sms_code.user.is_active = True
-                sms_code.save()
+                sms_code.user.save()
                 sms_code.delete()
                 return redirect('login')
             else:
@@ -71,7 +71,7 @@ def login_view(request):
             user = authenticate(**form.cleaned_data)
             if user:
                 login(request, user)
-                return redirect('desserts')
+                return redirect('list')
             else:
                 form.add_error(None, 'Invalid credentials')
                 return render(request, 'user/login.html', {'form': form})

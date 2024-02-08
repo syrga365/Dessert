@@ -3,7 +3,7 @@ from django import forms
 from post.models import Dessert, ReviewDessert, Category
 
 
-class DessertCreateForm(forms.ModelForm):
+class PostCreateForm(forms.ModelForm):
     class Meta:
         model = Dessert
         fields = ('title', 'photo', 'recipe', 'content', 'category')
@@ -16,7 +16,7 @@ class DessertCreateForm(forms.ModelForm):
         }
 
 
-class ReviewDessertCreateForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
     class Meta:
         model = ReviewDessert
         fields = ('text',)
@@ -25,7 +25,7 @@ class ReviewDessertCreateForm(forms.ModelForm):
         }
 
 
-class CategoryCreateForm(forms.ModelForm):
+class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('title',)
