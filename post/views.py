@@ -156,13 +156,14 @@ def review_create_view(request, post_id):
 
         return redirect('details', post_id=post_id)
 
-# @login_required
-# def post_delete_view(request, post_id):
-#     try:
-#         posts = Dessert.objects.get(id=post_id)
-#     except Dessert.DoesNotExist:
-#         return HttpResponse('None')
-#     if posts.user != request.user:
-#         return HttpResponse('Permission denied', status=403)
-#     posts.delete()
-#     return redirect('list')
+
+@login_required
+def post_delete_view(request, post_id):
+    try:
+        posts = Dessert.objects.get(id=post_id)
+    except Dessert.DoesNotExist:
+        return HttpResponse('None')
+    if posts.user != request.user:
+        return HttpResponse('Permission denied', status=403)
+    posts.delete()
+    return redirect('list')
