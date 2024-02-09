@@ -13,8 +13,25 @@
         <p>{{ user.data_joined }}</p>
 
 
-        <a class="submit" href="/logout/">Logout</a>
-        </div>
+        <a href="/profile/update_profile/" method="post">Update Profile</a><br>
+        <a class="submit" href="/logout/">Logout</a><br><br>
+    </div>
+    </div>
+
+{% for post in user.posts_d.all %}
+<div class="card" style="width: 18rem;">
+    <img src="/media/{{ post.photo }}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{ post.title }} {{ post.rate }}</h5>
+        {% for c in posts.category.all %}
+          <span class="btn btn-secondary">{{ c.title }}</span>
+        {% endfor %}
+        <a href="/post/{{ post.id }}/" class="btn btn-primary">Перейти</a>
     </div>
 </div>
+{% endfor %}
+
+
+
+
 {% endblock %}

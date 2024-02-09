@@ -1,9 +1,10 @@
 import random
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
 from user.forms import RegisterForm, LoginForm, VeryfyForm
 from user.models import Profile, SMSCodes
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def register_view(request):
@@ -59,7 +60,7 @@ def veryfy_view(request):
                 return redirect('login')
             else:
                 form.add_error(None, "Invalid code")
-                return render(request, 'user/veryfy.html', {'form':form})
+                return render(request, 'user/veryfy.html', {'form': form})
 
 
 def login_view(request):
@@ -79,6 +80,21 @@ def login_view(request):
 
 def profile_view(request):
     return render(request, 'user/profile.html')
+
+
+@login_required
+def profile_update_view(request):
+    if request.method == 'GET':
+        return render(request, 'user/profile_update.html', {'form': RegisterForm()})
+    elif request.method == 'POST':
+        profile = Profile.objects.get(user=request.user)
+        form = RegisterForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save()
+            return redirect('profile')
+        else:
+            form = RegisterForm(instance=profile)
+        return render(request, 'user/profile_update.html', {"form": form, 'profile': profile})
 
 
 def logout_view(request):

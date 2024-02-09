@@ -2,13 +2,15 @@
 
 {% block content %}
     <h3> {{ posts.title }} {{ posts.rate }} </h3><br>
-      <img src=/media/{{ posts.photo }}><br>
+      <img src=/media/{{ posts.photo }} width="300"><br>
     <i>{{  posts.title}} - {{ posts.content }}</i><br><br>
     <i>Рецепт</i><br>
     <p><i>{{ posts.recipe }}</i></p><br>
     <p>{{ posts.created_at }}</p>
 
-
+{% if has_change_permission %}
+    <a href="/post/{{ posts.id }}/update/">Update Post</a><br><br>
+{% endif %}
 <h4>Отзывы: </h4>
     {% for review in posts.review.all %}
          <p> -<i>{{ review.text }}</i></p>

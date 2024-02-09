@@ -28,9 +28,10 @@ from post.views import (main_page_view,
                         category_details_view,
                         post_create_view,
                         category_create_view,
-                        review_create_view
+                        review_create_view,
+                        post_update_view
                         )
-from user.views import register_view, login_view, profile_view, logout_view, veryfy_view
+from user.views import register_view, login_view, profile_view, logout_view, veryfy_view, profile_update_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,18 +42,18 @@ urlpatterns = [
     path('goodby/', goodbye_view),
     path('post/', post_list_view, name='list'),
     path('post/<int:post_id>/', post_details_view, name='details'),
+    path('post/<int:post_id>/update/', post_update_view, name='post_update'),
     path('category/', category_view, name='category'),
     path('category/<int:category_id>/', category_details_view),
     path('post/create/', post_create_view),
     path('post/<int:post_id>/review/', review_create_view),
     path('category/create_category/', category_create_view),
 
-
-
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('profile/', profile_view, name='profile'),
     path('logout/', logout_view, name='logout'),
-    path('verify/', veryfy_view, name='veryfy')
+    path('verify/', veryfy_view, name='veryfy'),
+    path('profile/update_profile/', profile_update_view)
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -13,7 +13,7 @@ class Dessert(models.Model):
     user = models.ForeignKey(
         'auth.User',
         on_delete=models.CASCADE,
-        related_name='posts',
+        related_name='posts_d',
         null=True
     )
     title = models.CharField(max_length=100)
