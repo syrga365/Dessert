@@ -9,8 +9,8 @@
     <p>{{ posts.created_at }}</p>
 
 {% if has_change_permission %}
-    <a href="/post/{{ posts.id }}/update/">Update Post</a><br>
-    <a href="/post/{{ posts.id }}/delete/">Delete Post</a><br><br>
+    <a href="/post2/{{ posts.id }}/update2/">Update Post</a><br>
+    <a href="{% url 'delete_post' pk=posts.id %}">Delete Post</a><br><br>
 {% endif %}
 <h4>Отзывы: </h4>
     {% for review in posts.review.all %}
@@ -20,7 +20,7 @@
     {% endfor %}
 
 
-<form action="/post/{{ posts.id }}/review/" method="post">
+<form action="/post2/{{ posts.id }}/review2/" method="post">
         {% csrf_token %}
         {{ review_form.as_p }}
          <input type="submit" value="Create">

@@ -84,7 +84,7 @@ def login_view(request):
             user = authenticate(**form.cleaned_data)
             if user:
                 login(request, user)
-                return redirect('list')
+                return redirect('post_list')
             else:
                 form.add_error(None, 'Invalid credentials')
                 return render(request, 'user/login.html', {'form': form})

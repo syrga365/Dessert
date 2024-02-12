@@ -3,7 +3,7 @@
 {% block content %}
 
 <h3>Search</h3>
-
+<p><a href="?sort=created_at">Sort by created at</a></p>
 <p><a href="?sort=title">Sort by title</a></p><br>
 
 {% for category in categories %}
@@ -18,12 +18,12 @@
 </form>
 
 <h3> Десерты</h3>
-{% for dessert in posts %}
+{% for dessert in object_list %}
 <div class="card" style="width: 18rem;">
     <img src="/media/{{ dessert.photo }}" class="card-img-top" alt="...">
     <div class="card-body">
         <h4 class="card-title"> {{ dessert.title }} {{ dessert.rate }}</h4>
-        <a href="/post/{{ dessert.id }}/" class="btn btn-primary">Перейти</a>
+        <a href="/post2/{{ dessert.id }}/" class="btn btn-primary">Перейти</a>
     </div>
 </div>
 {% endfor %}

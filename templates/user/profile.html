@@ -15,8 +15,9 @@
 
         <a href="/profile/update_profile/" method="post">Update Profile</a><br>
         <a class="submit" href="/logout/">Logout</a><br><br>
+        </div>
     </div>
-    </div>
+</div>
 
 {% for post in user.posts_d.all %}
 <div class="card" style="width: 18rem;">
@@ -26,7 +27,7 @@
         {% for c in posts.category.all %}
           <span class="btn btn-secondary">{{ c.title }}</span>
         {% endfor %}
-        <a href="/post/{{ post.id }}/" class="btn btn-primary">Перейти</a>
+        <a href="/post2/{{ post.id }}/" class="btn btn-primary">Перейти</a>
     </div>
 </div>
 {% endfor %}

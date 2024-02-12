@@ -32,7 +32,7 @@ class ReviewDessert(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    posts = models.ForeignKey(
+    post = models.ForeignKey(
         'post.Dessert',
         on_delete=models.CASCADE,
         related_name="review"
