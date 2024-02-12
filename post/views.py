@@ -83,26 +83,21 @@ class CategoryView(ListView):
     context_object_name = 'categories'
 
 
-def category_details_view(request, category_id):
-    if request.method == 'GET':
+class CategoryDetailsView(ListView):
+    template_name = "post/category_details.html"
+    context_object_name = "posts"
+    queryset = Dessert.objects.all()
+
+    def get_queryset(self):
+        category_id = self.kwargs.get('category_id')
+        return self.queryset.filter(category=category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get('category_id')
         categories = Category.objects.filter(id=category_id)
-        posts = Dessert.objects.filter(category__in=categories)
-        return render(request, "post/category_details.html",
-                      context={'categories': categories, "posts": posts})
-
-
-
-#не получилось отображать название книг относащееся к какому то категорию
-# class CategoryDetailView(DetailView):
-#     model = Category
-#     context_object_name = 'categories'
-#     template_name = 'post/category_details.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         category = self.get_object()
-#         context['books'] = Dessert.objects.all()
-#         return context
+        context['categories'] = categories
+        return context
 
 
 class PostCreateView(CreateView):
